@@ -5,8 +5,6 @@ FROM ubuntu:24.04
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Set build arguments for UID and GID
-ARG USER_UID=109026
-ARG USER_GID=10000425
 
 # Update the package list and install necessary packages
 # RUN apt-get install -y --no-install-recommends \
@@ -37,8 +35,7 @@ ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 
 # Create a group and user with the same UID and GID as the host user
-RUN groupadd -g ${USER_GID} devuser && \
-    useradd -m -u ${USER_UID} -g ${USER_GID} -s /bin/bash devuser && \
+RUN useradd -m -s /bin/bash devuser && \
     echo 'devuser:password' | chpasswd && \
     usermod -aG sudo devuser
 
